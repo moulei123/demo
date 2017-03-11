@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        ul {
+            list-style: none
+        }
+
+        img {
+            vertical-align: top
+        }
+
+        .box {
+            width: 490px;
+            height: 170px;
+            margin: 100px auto;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .inner {
+            width: 490px;
+            height: 170px;
+            background-color: pink;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .inner ul {
+            width: 1000%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .inner li {
+            float: left;
+        }
+
+        .square {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .square span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 16px;
+            cursor: pointer;
+        }
+
+        .square span.current {
+            background-color: orangered;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <div class="inner">
+        <ul>
+            <li><a href="#"><img src="images/01.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/02.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/03.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/04.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/05.jpg" alt=""/></a></li>
+        </ul>
+        <div class="square">
+            <span class="current">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
+</div>
+<script>
+    //对于简单的轮播图，第一步是获取需要设置对象的各种元素。
+    //考虑到这里的需求是，鼠标浮动到按钮上，图片会跟着滑动。
+    //所以呢，在这里需要的按钮，需要一个简单的排他，我们需要他自己一个当前高亮即可
+    //鼠标经过时，立马触发定时器，就ok了；
+    var box = document.getElementById("box");
+    var inner = box.children[0];
+    var ul = inner.children[0];
+    var square = inner.children[1];
+    var squares = square.children;
+    var imgWidth = inner.offsetWidth;
+
+    for (var i = 0; i < squares.length; i++) {
+        var sq = squares[i];
+        sq.index = i;//让当前的每个小标签的位置等于数组中的索引
+        //排他事件
+        sq.onmouseover = function(){
+            for (var j = 0; j < squares.length; j++) {
+                squares[j].className = "";
+            }
+            this.className = "current";
+            var tar = -this.index*imgWidth;
+            animate(ul,tar);
+        };
+    }
+
+  // 利用定时器来完成图片自己移动；
+            function animate(obj, tar) {
+                clearInterval(obj.timer);
+                obj.timer = setInterval(function () {
+                    var leader = obj.offsetLeft;
+                    var step = 10;
+                    step = leader < tar ? step : -step;
+                    if (Math.abs(tar - leader) >= Math.abs(step)) {
+                        leader += step;
+                        obj.style.left = leader + "px";
+                    } else {
+                        obj.style.left = tar + "px";
+                        clearInterval(obj.timer);
+                    }
+                }, 15);
+            }
+            ;
+
+</script>
+</body>
+</html>

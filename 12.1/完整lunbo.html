@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .screen {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float: left;
+        }
+
+        .screen ul {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            width: 3000px;
+        }
+
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .all ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .all ol li.current {
+            background: yellow;
+        }
+
+        #arr {
+            display: none;
+        }
+
+        #arr span {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            margin-top: -20px;
+            background: #000;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: '黑体';
+            font-size: 30px;
+            color: #fff;
+            opacity: 0.3;
+            border: 1px solid #fff;
+        }
+
+        #arr #right {
+            right: 5px;
+            left: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="all" id='box'>
+    <div class="screen">
+        <ul>
+            <li><img src="images/1a.jpg" width="500" height="200"/></li>
+            <li><img src="images/2b.jpg" width="500" height="200"/></li>
+            <li><img src="images/3c.jpg" width="500" height="200"/></li>
+            <li><img src="images/4d.jpg" width="500" height="200"/></li>
+            <li><img src="images/5e.jpg" width="500" height="200"/></li>
+        </ul>
+        <ol>
+        </ol>
+    </div>
+    <div id="arr"><span id="left">&lt;</span><span id="right">&gt;</span></div>
+</div>
+<script>
+    var timer = null;
+    var box = document.getElementById("box");
+    var arr = document.getElementById("arr");
+    var left = document.getElementById("left");
+    var right = document.getElementById("right");
+    var screen = box.children[0];
+    var ul = screen.children[0];
+    var ullis = ul.children;
+    var ol = screen.children[1];
+    var imgWidth = screen.offsetWidth;
+    for (var i = 0; i < ullis.length; i++) {
+        var li = document.createElement("li");
+        ol.appendChild(li);
+        li.innerHTML = i + 1;
+    }
+    ;
+    var ollis = ol.children;
+    ollis[0].className = "current";
+    var firstImg = ullis[0].cloneNode(true);
+    ul.appendChild(firstImg);
+    for (var j = 0; j < ollis.length; j++) {
+        ollis[j].index = j;
+        ollis[j].onmouseover = function () {
+            for (var k = 0; k < ollis.length; k++) {
+                ollis[k].className = "";
+            }
+            this.className = "current"
+            var tar = -this.index * imgWidth;
+            animate(ul, tar);
+            pic = squre = this.index;
+        }
+    }
+    box.onmouseover = function () {
+        arr.style.display = "block";
+        clearInterval(timer);
+    }
+    box.onmouseout = function () {
+        arr.style.display = "none";
+        timer = setInterval(playNext, 1000);
+    };
+    var pic = 0;
+    var squre = 0;
+    right.onclick = function () {
+        if (pic == ullis.length - 1) {
+            ul.style.left = 0;
+            pic = 0;
+        }
+        pic++;
+        var tar = -pic * imgWidth;
+        animate(ul, tar);
+
+        if (squre < ollis.length - 1) {
+            squre++;
+        } else {
+            squre = 0;
+        }
+        for (var i = 0; i < ollis.length; i++) {
+            ollis[i].className = "";
+        }
+        ollis[squre].className = "current";
+    };
+    left.onclick = function () {
+        if (pic === 0) {
+            ul.style.left = -(ullis.length - 1) * imgWidth + "px";
+            pic = ullis.length - 1;
+        }
+        pic--;
+        var tar = -pic * imgWidth;
+        animate(ul, tar);
+
+        if (squre > 0) {
+            squre--;
+        } else {
+            squre = ollis.length - 1;
+        }
+        for (var i = 0; i < ollis.length; i++) {
+            ollis[i].className = "";
+        }
+        ollis[squre].className = "current";
+    };
+    timer = setInterval(playNext, 1000);
+    function playNext() {
+        right.onclick();
+    }
+
+    function animate(obj, tar) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var leader = obj.offsetLeft;
+            var step = 10;
+            step = leader < tar ? step : -step;
+            if (Math.abs(tar - leader) >= Math.abs(step)) {
+                leader += step;
+                obj.style.left = leader + "px";
+            } else {
+                obj.style.left = tar + "px";
+                clearInterval(obj.timer);
+            }
+        }, 15);
+    }
+    ;
+
+</script>
+</body>
+</html>

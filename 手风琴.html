@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 1000px;
+            height: 362px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            margin-top: 200px;
+
+        }
+
+        ul {
+            list-style: none;
+            height: 306px;
+            width: 1224px;
+
+        }
+
+        li {
+            width: 170px;
+            height: 306px;
+            float: left;
+        }
+    </style>
+    <script src = 12.9/jquery-1.12.2.min.js></script>
+    <script>
+        $(document).ready(function(){
+//            $("#box ul li" ).mouseenter(function(){
+//                $(this).css("width","506px").slideToggle("slow");
+//                $(this).siblings().css("width","100px").slideToggle("slow");
+//            })
+//            $("#box ul li").mouseleave(function(){
+//                $("li").css("width","167px").slideToggle("slow");
+//            })
+//        })
+            $("#box ul li" ).mouseenter(function(){
+                $(this).animate({width:506},1000,function(){
+                    $("li").animate({width:167});
+                }).stop().clearQueue(true);
+                $(this).siblings().animate({width:100}).stop().clearQueue(true);
+            })
+//            $("#box ul li").mouseleave(function(){
+//
+//            })
+        })
+    </script>
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li><img src="images/1.jpg" alt=""/></li>
+        <li><img src="images/2.jpg" alt=""/></li>
+        <li><img src="images/3.jpg" alt=""/></li>
+        <li><img src="images/4.jpg" alt=""/></li>
+        <li><img src="images/5.jpg" alt=""/></li>
+        <li><img src="images/6.jpg" alt=""/></li>
+    </ul>
+</div>
+
+
+</body>
+</html>

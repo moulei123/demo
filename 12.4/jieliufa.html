@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var timer = null;
+    window.onresize = function(){
+        clearInterval(timer);
+        timer = setInterval(responsive(),500);
+    }
+    responsive();
+    function responsive(){
+        console.log("aaaaaa");
+        if(client().width>960){
+            document.body.backgroundColor = "red";
+            document.body.innerHTML = "computer";
+        }else if(client().width>640){
+            document.body.backgroundColor = "yellow";
+            document.body.innerHTML = "pad";
+        }else{
+            document.body.backgroundColor = "yellow";
+            document.body.innerHTML = "mobile";
+        }
+    }
+    function client() {
+        return {
+            Width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0,
+            Height : window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0
+        };
+    }
+</script>
+</body>
+</html>

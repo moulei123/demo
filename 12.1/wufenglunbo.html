@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            vertical-align: top;
+        }
+
+        /*取消图片底部3像素距离*/
+        .box {
+            width: 300px;
+            height: 200px;
+            margin: 100px auto;
+            background-color: pink;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box ul li {
+            float: left;
+        }
+
+        .box ul {
+            width: 1500px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="screen">
+    <ul>
+        <li><img src="images/0a.jpg" alt=""/></li>
+        <li><img src="images/0b.jpg" alt=""/></li>
+        <li><img src="images/0c.jpg" alt=""/></li>
+        <li><img src="images/0a.jpg" alt=""/></li><!--让最后一张图片成为第一张图片，完无缝滚动成-->
+
+    </ul>
+</div>
+<script>
+    //利用一个定时器，让图片自己动起来
+var screen = document.getElementById("screen");
+var ul = screen.children[0];
+    var lis = ul.children;
+    setInterval(function(){
+        var leader = ul.offsetLeft;
+        var step = -4;
+        if(leader >-900){
+            leader += step;
+            ul.style.left = leader+"px";
+        }else{
+            ul.style.left = 0;
+        }
+    },15)
+
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--<input type="text" value="请输入验证码" id="btn"/>-->
+<!--<span id="btn1">点击发送</span>-->
+<!--<input type="button" value="点击发送" id="btn1"/>-->
+<script>
+    //var str = "留下真漂亮啊是真的很漂亮啊";
+    //str = str.slice(-2,5);
+    //str = str.substring(2,5);
+    //str = str.substr(2,6)
+   // do{
+//        str = str.replace("漂",";");
+//    }while(str.indexOf("漂") !== -1);
+//    console.log(str);
+//    var btn = document.getElementById("btn");
+//    var str = "aaa bbb ccc showhide show";
+//    btn.onclick = function(){
+//        str.replace("show","hide");
+//    }
+//    function replaceClassName(element,oldName,newName){
+//            var arr = str.split(" ");
+//            for( var i = 0;i<arr.length;i++){
+//
+//            }
+//    }
+//    var btn1 = document.getElementById("btn");
+//    var btn2 = document.getElementById("btn1");
+//    var timer = null;
+//    var num = 5;
+//    btn1.onfocus = function(){
+//        btn1.value = "";
+//    };
+//    btn2.onclick = function(){
+//        timer = setInterval(function(){
+//            num--;
+//            btn2.innerHTML = num +"秒后重新发送";
+//            if(num === 0){
+//                // btn2.disabled = true;
+//               timer = clearInterval(timer);
+//                btn2.innerHTML = "重新发送";
+//               // btn2.disabled = false;
+//            }
+//        },1000)
+//    };
+
+//    var btn1 = document.getElementById("btn");
+//    var btn2 = document.getElementById("btn1");
+    function clock(){
+        var date  = new Date();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        var str = hour+":"+minute+":"+second;
+    }
+    setInterval(clock,1000);
+
+
+
+
+
+//    btn1.onclick = function(){
+//        setTimeout(function(){
+//            console.log("getup");
+//        },2000);
+//    };
+//    btn2.onclick = function(){
+//        clearTimeout(timer);
+//    };
+
+</script>
+</body>
+</html>
